@@ -1,0 +1,126 @@
+<!--<div class="form-group">
+  <label for="file">Choose File</label>
+  <input type="file"
+         id="file"
+         (change)="handleFileInput($event.target.files)">
+</div>
+
+<select (change)="onChange($event.target.value)">
+  <option [value]="0">All</option>
+  <option *ngFor="let opt of inputCategory" [value]="opt.id">{{opt.name}}</option>
+</select>
+
+<div>
+  <span>Изменить в гривне</span>
+  <input (input)="priceIsChanged()" [(ngModel)]="additionalPrice" [disabled]="procentIsExists" type="number" />
+  <input (input)="procentIsChanged()" type="number" [disabled]="priceIsExists" [(ngModel)]="additionalProcent" />
+  <span>Изменить в процентах</span>
+  <button (click)="changeAllPrice()">Применить</button>
+
+</div>
+
+<div>
+  <div *ngFor="let offer of inputOffers">
+    <div (click)="selectOneOffer(offer.categoryId, offer.id, offer.name)">{{offer.name }} {{offer.price}}грн</div>
+  </div>
+</div>
+<ng-container *ngIf="changeOneOfferPopup">
+
+  <div style="color:burlywood; width: 100px; height: 100px">
+    <div>{{oneOfferName}}</div>
+    <span>Изменить в гривне</span>
+    <input [(ngModel)]="privateadditionalPrice" type="number" />
+    <button (click)="changeOneOffer('price')">Применить</button>
+  </div>
+
+</ng-container>-->
+
+<div class="container">
+  <div class="row">
+    <div class="logo col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"></div>
+    <div class="categories col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+      <div class="categories__overflow">
+        <div class="categories__name">
+          <h4>Категории</h4>
+          <div class="categories__file">
+            <form enctype="multipart/form-data" method="post">
+              <span>*</span><input type="file" (change)="handleFileInput($event.target.files)" name="xml-file" accept="">
+              <input type="reset" id="reset">
+              <label for="reset"><div class="categories__reset-button"></div></label>
+            </form>
+          </div>
+          <form action="#">
+            <select (change)="onChange($event.target.value)" *ngIf="inputCategory" name="CategoryName" required id="CategoryName">
+              <option [value]="0">All</option>
+              <option *ngFor="let opt of inputCategory" [value]="opt.id">{{opt.name}}</option>
+            </select>
+          </form>
+        </div>
+        <div  *ngFor="let offer of inputOffers" class="categories__item">
+          <form action="#" class="flex-block">
+            <div class="categories__item-name">{{offer.name}}</div>
+            <div class="flex-block">
+              <div class="flex-block">
+                <input type="text" name="itemPrice" [value]="offer.price" disabled />
+                <span>грн</span>
+              </div>
+              <div>
+                <button (click)="selectOneOffer(offer)" id="changePriceBtn">Изменить</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="general col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
+      <form action="#">
+        <h4>Дата последнего изменения цен</h4>
+        <input type="text" disabled>
+        <h4>Общее изменение цены всех товаров</h4>
+        <div>
+          <div class="btn">
+            <button class="plus-btn">+</button>
+            <button class="minus-btn">-</button>
+          </div>
+          <input (input)="priceIsChanged()" [(ngModel)]="additionalPrice" [disabled]="procentIsExists" type="number"><span>грн</span>
+        </div>
+        <div class="general__price-perc">
+          <div class="btn">
+            <button class="plus-btn">+</button>
+            <button class="minus-btn">-</button>
+          </div>
+          <input (input)="procentIsChanged()" type="number" [disabled]="priceIsExists" [(ngModel)]="additionalProcent"><span>%</span>
+        </div>
+        <div class="general__buttons">
+          <div>
+            <button (click)="changeAllPrice()" class="general__price-save">Сохранить</button>
+          </div>
+          <button class="general__price-back">Отменить изменение</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<ng-container *ngIf="changeOneOfferPopup" class="categories__item-price" id="changePrice">
+  <h4>Изменить цену товара</h4>
+  <form action="#">
+    <div>
+      <div class="btn">
+        <button class="plus-btn">+</button>
+        <button class="minus-btn">-</button>
+      </div>
+      <input [(value)]="privateadditionalPrice" type="number" /><span>грн</span>
+    </div>
+    <div>
+      <div class="btn">
+        <button class="plus-btn">+</button>
+        <button class="minus-btn">-</button>
+      </div>
+      <input type="text"><span>%</span>
+    </div>
+    <button (click)="changeOneOffer('price')" class="categories__price-save" id="saveBtn">Сохранить</button>
+    <button class="categories__price-cancel" id="cancelBtn">Отмена</button>
+  </form>
+</ng-container>
